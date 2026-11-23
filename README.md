@@ -106,6 +106,7 @@ Live SMTP/SMS delivery, queue and scheduler health, backup/restore, AI provider 
 ## Handoff documents
 
 - `docs/TECHNICAL-BRIEF.md`: architecture, security, verification, and limits.
+- `docs/SPECIFICATION.md` and `docs/SPECIFICATION.docx`: current functional and design specification, including the adjudication status report.
 - `docs/USER-MANUAL.md`: role-based user instructions.
 - `docs/DEMO-SCRIPT.md`: suggested walkthrough.
 
