@@ -1,0 +1,11 @@
+import {useEffect,useState} from 'react';
+import {api} from './operationalApi';
+
+type Programme={id:number;name:string;categories:string[];mappings:Record<string,string>};
+type Data={summaries:string[];programmes:Programme[]};
+export default function ReviewCategoryMapping(){
+ const [data,setData]=useState<Data|null>(null),[chosen,setChosen]=useState<Record<string,string>>({}),[error,setError]=useState(''),[notice,setNotice]=useState(''),[busy,setBusy]=useState('');
+ useEffect(()=>{api<Data>('review-category-mappings').then(r=>{setData(r);setChosen(Object.fromEntries(r.programmes.flatMap(p=>p.categories.map(c=>[`${p.id}:${c}`,p.mappings[c]||'']))))}).catch(e=>setError(e.message))},[]);
+ async function save(programme:number,category:string){const key=`${programme}:${category}`;setBusy(key);setError('');setNotice('');try{await api(`review-category-mappings/${programme}`,'PUT',{detailed_category:category,summary_category:chosen[key]});setData(d=>d?{...d,programmes:d.programmes.map(p=>p.id===programme?{...p,mappings:{...p.mappings,[category]:chosen[key]}}:p)}:d);setNotice(`${category} now routes to ${chosen[key]}.`)}catch(e){setError((e as Error).message)}finally{setBusy('')}}
+ return <section className="connected-form review-category-mapping"><h2>Evaluator category routing</h2><p>Applicants choose a detailed business type. Choose one evaluator category for each type. Changing a mapping affects applications still waiting for automatic assignment.</p>{error&&<p role="alert">{error}</p>}{notice&&<p role="status">{notice}</p>}{data?.programmes.map(p=><div key={p.id}><h3>{p.name}</h3><div className="review-category-map-list">{p.categories.map(category=>{const key=`${p.id}:${category}`;return <div className="review-category-map-row" key={category}><strong>{category}</strong><label>Evaluator category<select value={chosen[key]||''} onChange={e=>setChosen(v=>({...v,[key]:e.target.value}))}><option value="">Choose category</option>{data.summaries.map(summary=><option key={summary}>{summary}</option>)}</select></label><button className="btn" disabled={!chosen[key]||chosen[key]===p.mappings[category]||!!busy} onClick={()=>void save(p.id,category)}>{busy===key?'Saving…':'Save'}</button></div>})}</div></div>)}</section>;
+}

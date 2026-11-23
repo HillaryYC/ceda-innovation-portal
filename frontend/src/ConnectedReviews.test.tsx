@@ -1,0 +1,10 @@
+// @vitest-environment jsdom
+import React from 'react';
+import {afterEach,expect,it,vi} from 'vitest';
+import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
+import ConnectedReviews from './ConnectedReviews';
+import {api,type Session} from './operationalApi';
+vi.mock('./operationalApi',()=>({api:vi.fn()}));
+afterEach(()=>{cleanup();vi.clearAllMocks()});
+const user:Session={id:1,name:'Admin',email:'admin@example.test',is_master:true,mfa_required:true,mfa_enrolled:true,mfa_verified:true,permissions:{'reviews.manage':[1]}};
+it('allocates reviewer IDs, adjudicator, lead and immutable template IDs',async()=>{const data={reviewers:[{id:2,name:'Evaluator One',evaluator_programmes:[1],adjudicator_programmes:[],status:'active',availability:'available'},{id:3,name:'Adjudicator One',evaluator_programmes:[],adjudicator_programmes:[1],status:'active',availability:'available'}],assignments:[],templates:[{id:10,programme_id:1,name:'Evaluation',kind:'evaluation',version:1,active:true},{id:11,programme_id:1,name:'Adjudication',kind:'adjudication',version:1,active:true}],applications:[{id:101,title:'A real application',programme_id:1,status:'ready',complete:100}],programmes:[{id:1,name:'CEDA'}]};vi.mocked(api).mockImplementation(async(path)=>path==='evaluator-teams'?{teams:[]} as any:data as any);render(<ConnectedReviews user={user} section="evaluators"/>);await screen.findByText('Evaluator One');fireEvent.click(screen.getByRole('button',{name:'Allocate application'}));fireEvent.click(screen.getByLabelText('Evaluator One'));fireEvent.change(screen.getByLabelText('Lead evaluator'),{target:{value:'2'}});fireEvent.change(screen.getByLabelText('Adjudicator (optional)'),{target:{value:'3'}});fireEvent.change(screen.getByLabelText('Evaluation template'),{target:{value:'10'}});fireEvent.change(screen.getByLabelText('Adjudication template'),{target:{value:'11'}});fireEvent.click(screen.getByRole('button',{name:'Save allocation'}));await waitFor(()=>expect(api).toHaveBeenCalledWith('applications/101/allocation','PUT',expect.objectContaining({evaluator_ids:[2],adjudicator_id:3,lead_id:2,template_id:10,adjudication_template_id:11})));});

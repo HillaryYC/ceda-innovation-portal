@@ -1,0 +1,10 @@
+.ceda-brand-logo,.public-brand .ceda-brand-logo{--logo-width:103px;display:inline-block;position:relative;width:var(--logo-width);height:calc(var(--logo-width)*.72);flex:none;overflow:hidden;vertical-align:middle;background:transparent}
+.ceda-brand-logo img{position:absolute;display:block;max-width:none!important;height:auto!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;object-fit:initial!important}
+.ceda-brand-logo-light img{width:122.3%!important;left:-11.7%;top:-12%}
+.ceda-brand-logo-dark img{width:130%!important;left:-16.5%;top:-34%}
+.ceda-brand-logo-compact{--logo-width:86px}
+.ceda-brand-logo-large{--logo-width:150px}
+.public-header .ceda-brand-logo,.public-footer .ceda-brand-logo{--logo-width:130px}
+@media(max-width:740px){.public-header .ceda-brand-logo{--logo-width:104px}}
+.public-site .public-footer{display:block}
+.login .login-brand{display:flex;justify-content:center;width:100%;margin-bottom:28px}

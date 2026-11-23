@@ -1,0 +1,41 @@
+.public-showcase{position:relative;isolation:isolate;overflow:hidden;background:#eae1d4;padding:82px 0 90px;color:#362016;scroll-margin-top:24px}
+.public-showcase>.public-container{position:relative}
+.public-showcase-heading{display:block;height:auto;min-height:0;padding:0;margin-bottom:32px;background:transparent;border-radius:0}
+.public-showcase-heading h2{max-width:920px;font:400 clamp(38px,4.4vw,57px)/1.04 'Libre Caslon Display',Georgia,serif;letter-spacing:-1.5px;margin:16px 0 0}
+.public-showcase-lead{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(265px,1fr);gap:22px;min-height:430px;animation:showcase-enter .5s ease both}
+.public-showcase-photo{display:block;width:100%;height:430px;min-width:0;overflow:hidden;padding:0;border:0;border-radius:18px;background:transparent;cursor:pointer}
+.public-showcase-photo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:18px;transition:transform .4s ease}
+.public-showcase-photo img.is-contained{object-fit:contain}
+.public-showcase-photo:hover img{transform:scale(1.025)}
+.public-showcase-article{min-width:0;display:flex;flex-direction:column;align-items:flex-start;border-top:4px solid #a6522a;border-bottom:1px solid #c9b7a3;padding:24px 0 18px;background:transparent;color:#362016}
+.public-showcase-article .public-eyebrow{color:#a2552f}
+.public-site .public-showcase-article h3{margin:0 0 22px;font:400 clamp(30px,2.9vw,39px)/1.1 'Montserrat',sans-serif}
+.public-showcase-article p{font-size:14px;line-height:1.72;color:#715949;margin:0}
+.public-showcase-article button{display:inline-flex;align-items:center;gap:12px;margin-top:auto;padding:20px 0 0;border:0;background:transparent;color:#a94e23;font-size:12px;font-weight:700;cursor:pointer}
+.public-showcase-article button:hover{text-decoration:underline}
+.public-showcase-controls{display:flex;align-items:center;gap:24px;margin-top:20px}
+.public-showcase-count{font-size:10px;font-weight:700;letter-spacing:1.7px;color:#8f573b}
+.public-showcase-dots{display:flex;align-items:center;gap:7px}
+.public-showcase-dots button{width:9px;height:9px;padding:0;border:0;border-radius:99px;background:#bca994;cursor:pointer;transition:width .25s ease,background .25s ease}
+.public-showcase-dots button.is-active{width:27px;background:#a6522a}
+.public-showcase-arrows{display:flex;gap:9px;margin-left:auto}
+.public-showcase-arrows button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid #bda894;border-radius:50%;background:#fffaf266;color:#61341e;cursor:pointer;transition:background .2s ease,color .2s ease}
+.public-showcase-arrows button:hover{background:#61341e;color:#fffaf2}
+.public-showcase-tag{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#a2552f}
+.public-story-dialog{width:min(760px,calc(100vw - 30px));max-width:none;max-height:88dvh;padding:0;overflow:auto;border:0;border-radius:19px;background:#fffaf2;color:#362016}
+.public-story-dialog article{position:relative}
+.public-story-dialog article>img{width:100%;height:300px;object-fit:cover}
+.public-story-dialog article>img.is-contained{object-fit:contain}
+.public-story-dialog article>div{padding:34px 42px 45px}
+.public-site .public-story-dialog h2{font:600 clamp(29px,4vw,43px)/1.16 'Montserrat',sans-serif;letter-spacing:-1.3px;margin:16px 0 0}
+.public-site .public-story-dialog .public-story-intro{font-size:17px;line-height:1.6;font-weight:500;color:#513523;margin:22px 0 0;max-width:62ch}
+.public-story-body{border-top:1px solid #d8c7b3;margin-top:30px;padding-top:26px}
+.public-site .public-story-body p{font-size:14px;line-height:1.8;color:#664d3d;margin:0 0 17px;max-width:68ch}
+.public-site .public-story-body p:last-child{margin-bottom:0}
+.public-story-close{position:absolute;z-index:1;top:16px;right:16px;display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:50%;background:#fffaf2;color:#362016;cursor:pointer}
+.public-showcase button:focus-visible,.public-story-dialog button:focus-visible{outline:3px solid #a94e23;outline-offset:3px}
+@keyframes showcase-enter{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:850px){.public-showcase-lead{grid-template-columns:1fr}.public-showcase-photo{height:380px}.public-showcase-article{min-height:310px}}
+@media(max-width:620px){.public-showcase{padding:58px 0}.public-showcase-heading h2{font-size:clamp(36px,10vw,48px)}.public-showcase-photo{height:285px}.public-showcase-article{min-height:320px;padding-top:22px}.public-showcase-controls{margin-top:18px}.public-story-dialog article>img{height:210px}.public-story-dialog article>div.public-story-content{padding:26px 24px 34px}.public-story-body{margin-top:25px;padding-top:22px}}
+@media(prefers-reduced-motion:reduce){.public-showcase-lead{animation:none}.public-showcase-photo img,.public-showcase-dots button,.public-showcase-arrows button{transition:none}}
+.public-showcase-empty{padding:24px 0 42px;font-size:16px;line-height:1.6;opacity:.75}

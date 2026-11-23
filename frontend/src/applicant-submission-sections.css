@@ -1,0 +1,14 @@
+.applicant-submission-content h3{margin:0 0 6px}
+.applicant-portal .applicant-tabs .tab{flex:0 1 190px;justify-content:center}
+.applicant-submission-content .applicant-submission-hint{margin:0 0 16px;font-size:13px;color:#705d50}
+.applicant-submission-section{margin:0;border-bottom:1px solid #e3d5c4;background:transparent}
+.applicant-submission-section:first-of-type{border-top:1px solid #e3d5c4}
+.applicant-submission-section summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:16px 2px;cursor:pointer;color:#392b26;font-size:15px;font-weight:700;list-style:none}
+.applicant-submission-section summary::-webkit-details-marker{display:none}
+.applicant-submission-section summary:hover{color:#b74013}
+.applicant-submission-section summary:focus-visible{outline:2px solid #c84c16;outline-offset:3px;border-radius:2px}
+.applicant-section-chevron{flex:none;color:#b74013;transition:transform .18s ease}
+.applicant-submission-section[open] .applicant-section-chevron{transform:rotate(180deg)}
+.applicant-section-body{padding:0 32px 20px 2px}
+.applicant-section-body h4:first-child{margin-top:4px}
+@media(max-width:600px){.applicant-portal .applicant-tabs .tab{flex:1;justify-content:center;padding-inline:8px}.applicant-submission-section summary{min-height:58px;padding:14px 2px}.applicant-section-body{padding-right:4px;padding-bottom:18px}}

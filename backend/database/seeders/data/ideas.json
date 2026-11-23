@@ -1,0 +1,205 @@
+[
+  {
+    "id": 101,
+    "title": "Turning harvests into opportunity",
+    "team": "Team AgroLink",
+    "initial": "Ag",
+    "category": "Agriculture",
+    "location": "Gaborone",
+    "date": "2026-11-12",
+    "color": "#e2ebcd",
+    "ink": "#52703a",
+    "summary": "Connecting smallholder farmers to reliable buyers through a simple, shared marketplace.",
+    "problem": "Smallholder farmers struggle to find consistent buyers, leading to lost produce and unpredictable income. Buyers have limited visibility into locally available harvests.",
+    "solution": "AgroLink connects farmers and buyers with a mobile marketplace, harvest listings and coordinated collection points. The team proposes a pilot with 20 farms around Gaborone.",
+    "status": "pending",
+    "complete": 100,
+    "checks": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "id": 102,
+    "title": "A smarter start for small businesses",
+    "team": "Pula Collective",
+    "initial": "Pu",
+    "category": "Financial inclusion",
+    "location": "Francistown",
+    "date": "2026-11-12",
+    "color": "#e8e1f5",
+    "ink": "#76608d",
+    "summary": "A pocket-sized business companion for informal traders to track sales and plan ahead.",
+    "problem": "Informal traders often rely on paper records, making it difficult to understand cash flow or prepare financing applications.",
+    "solution": "A low-data bookkeeping tool with daily sales records, simple cash-flow summaries and exportable business reports.",
+    "status": "pending",
+    "complete": 75,
+    "checks": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "id": 103,
+    "title": "Waste today. Resources tomorrow.",
+    "team": "Circular BW",
+    "initial": "Cb",
+    "category": "Green innovation",
+    "location": "Maun",
+    "date": "2026-11-11",
+    "color": "#f3dfce",
+    "ink": "#946c42",
+    "summary": "Making recycling accessible by linking households with local collectors and processors.",
+    "problem": "Households have few convenient ways to separate and recycle waste, while collectors lack predictable collection routes.",
+    "solution": "A neighbourhood collection platform with pickup requests, sorting guides and collection route coordination.",
+    "status": "pending",
+    "complete": 100,
+    "checks": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "id": 104,
+    "title": "Local skills, stronger communities",
+    "team": "Kopano Labs",
+    "initial": "Ko",
+    "category": "Youth & employment",
+    "location": "Palapye",
+    "date": "2026-11-11",
+    "color": "#dae8ef",
+    "ink": "#4c7588",
+    "summary": "Helping young people turn practical skills into paid opportunities close to home.",
+    "problem": "Young people with practical skills struggle to find trusted local customers and build a visible track record.",
+    "solution": "A skills directory with verified profiles, local job requests and a portfolio of completed work.",
+    "status": "pending",
+    "complete": 100,
+    "checks": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "id": 105,
+    "title": "Discover the Botswana beyond",
+    "team": "Tswelo Travel",
+    "initial": "Ts",
+    "category": "Tourism",
+    "location": "Kasane",
+    "date": "2026-11-10",
+    "color": "#ede5cc",
+    "ink": "#8c7840",
+    "summary": "Putting community-led experiences on the map for curious, conscious travellers.",
+    "problem": "Community tourism providers have limited digital visibility and depend on intermediaries to reach visitors.",
+    "solution": "A discovery and booking prototype for locally hosted experiences, with transparent pricing and host profiles.",
+    "status": "pending",
+    "complete": 50,
+    "checks": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "id": 106,
+    "title": "Every drop makes a difference",
+    "team": "MetsiWorks",
+    "initial": "Mw",
+    "category": "Green innovation",
+    "location": "Lobatse",
+    "date": "2026-11-10",
+    "color": "#dce9df",
+    "ink": "#557961",
+    "summary": "Affordable water monitoring that helps small businesses spot leaks before they grow.",
+    "problem": "Small businesses can lose water through undetected leaks and have little visibility into usage patterns.",
+    "solution": "A low-cost sensor paired with a dashboard that flags unusual usage and provides simple conservation recommendations.",
+    "status": "pending",
+    "complete": 100,
+    "checks": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "id": 107,
+    "title": "Healthcare within reach",
+    "team": "Bophelo Tech",
+    "initial": "Bt",
+    "category": "Health",
+    "location": "Serowe",
+    "date": "2026-11-09",
+    "color": "#f2dfdf",
+    "ink": "#8e6565",
+    "summary": "Simplifying appointment planning for rural communities and local clinics.",
+    "problem": "Patients travel long distances without knowing clinic availability.",
+    "solution": "An SMS-first appointment request and reminder service.",
+    "status": "information",
+    "complete": 75,
+    "checks": [
+      true,
+      false,
+      false,
+      false
+    ],
+    "request": "Please clarify the pilot clinic partnership and attach a consent plan."
+  },
+  {
+    "id": 108,
+    "title": "One market for local makers",
+    "team": "Made in BW",
+    "initial": "Mb",
+    "category": "Financial inclusion",
+    "location": "Gaborone",
+    "date": "2026-11-09",
+    "color": "#e6dfef",
+    "ink": "#775e8e",
+    "summary": "A digital storefront connecting independent Botswana makers to new customers.",
+    "problem": "Local makers lack affordable online selling tools.",
+    "solution": "Shared storefronts and simple order management for craft businesses.",
+    "status": "ready",
+    "complete": 100,
+    "checks": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "id": 109,
+    "title": "Learning without limits",
+    "team": "Thuto Studio",
+    "initial": "Th",
+    "category": "Youth & employment",
+    "location": "Molepolole",
+    "date": "2026-11-08",
+    "color": "#dde8f3",
+    "ink": "#546e91",
+    "summary": "Offline learning resources designed for students with limited connectivity.",
+    "problem": "Reliable internet is not available to every learner.",
+    "solution": "Downloadable learning packs with progress tracking.",
+    "status": "assigned",
+    "complete": 100,
+    "checks": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "evaluators": [
+      "Naledi Dube",
+      "Kabelo Mokoena"
+    ]
+  }
+]

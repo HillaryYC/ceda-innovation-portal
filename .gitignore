@@ -1,0 +1,14 @@
+.env
+**/.env
+**/vendor/
+**/node_modules/
+
+/tools/preview.sqlite
+/tools/preview.sqlite-*
+/tools/implementation-checkpoint/
+/tools/
+/frontend/dist/
+/frontend/.impeccable/
+/backend/storage/logs/
+/backend/public/build/
+/submission-pack/

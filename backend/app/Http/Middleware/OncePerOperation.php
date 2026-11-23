@@ -1,0 +1,6 @@
+<?php
+namespace App\Http\Middleware;
+use Illuminate\Support\Facades\DB;use Illuminate\Support\Str;
+class OncePerOperation{
+ public function handle($r,\Closure $next){$key=$r->header('Idempotency-Key');if(!$key||$r->isMethod('GET')||!$r->user())return $next($r);abort_unless(Str::isUuid($key),422,'Invalid request key.');$actorId=$r->user()->id;$fingerprint=hash('sha256',$r->method().$r->path().$r->getContent().$r->session()->get('login_nonce','legacy'));return DB::transaction(function()use($r,$next,$key,$fingerprint,$actorId){DB::table('users')->where('id',$actorId)->lockForUpdate()->first();$old=DB::table('operation_receipts')->where('user_id',$actorId)->where('request_key',$key)->first();if($old){abort_unless($old->fingerprint===$fingerprint,409,'This request key belongs to a different change.');return response(decrypt($old->response),$old->status)->header('Content-Type','application/json')->header('Cache-Control','no-store');}$response=$next($r);if($response->getStatusCode()<300)DB::table('operation_receipts')->insert(['user_id'=>$actorId,'request_key'=>$key,'fingerprint'=>$fingerprint,'response'=>encrypt($response->getContent()),'status'=>$response->getStatusCode(),'created_at'=>now()]);return $response;},3);}
+}

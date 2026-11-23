@@ -1,0 +1,12 @@
+// @vitest-environment jsdom
+import React from 'react';
+import {afterEach,expect,it,vi} from 'vitest';
+import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
+import ConnectedPeople from './ConnectedPeople';
+import {api,type PeopleData,type Session} from './operationalApi';
+vi.mock('./operationalApi',()=>({api:vi.fn()}));
+afterEach(()=>{cleanup();vi.clearAllMocks()});
+const user:Session={id:1,name:'Admin',email:'admin@example.test',is_master:true,mfa_required:true,mfa_enrolled:true,mfa_verified:true,permissions:{'people.manage':[1]}};
+const data:PeopleData={data:[{id:2,name:'Reviewer',email:'reviewer@example.test',status:'active',is_master:false,type:'external',expertise:null,availability:'available',expires_at:null,roles:[{programme_id:1,role_id:2,name:'Evaluator'}],overrides:[]}],programmes:[{id:1,name:'CEDA'}],roles:[{id:2,name:'Evaluator'}],permissions:['applications.view']};
+it('loads accounts from the API and records a real invitation request',async()=>{vi.mocked(api).mockImplementation(async(path)=>path==='people'?data:{} as any);render(<ConnectedPeople user={user}/>);await screen.findByText('Reviewer');fireEvent.click(screen.getByRole('button',{name:'Invite staff'}));fireEvent.change(screen.getByLabelText('Name'),{target:{value:'New Reviewer'}});fireEvent.change(screen.getByLabelText('Email'),{target:{value:'new@example.test'}});fireEvent.click(screen.getByLabelText('Evaluator'));fireEvent.click(screen.getByRole('button',{name:'Create and issue activation'}));await waitFor(()=>expect(api).toHaveBeenCalledWith('people','POST',expect.objectContaining({email:'new@example.test',mode:'invite',role_ids:[2],programme_id:1})));});
+it('sends explicit permission revocation to the backend',async()=>{vi.mocked(api).mockImplementation(async(path,method)=>path==='people'?data:path.endsWith('/history')?{data:[]}:method==='PATCH'?{data:data.data[0]}:{} as any);render(<ConnectedPeople user={user}/>);await screen.findByText('Reviewer');fireEvent.click(screen.getByRole('button',{name:'Manage'}));await screen.findByText('Permission overrides');fireEvent.change(screen.getByLabelText('applications.view'),{target:{value:'deny'}});fireEvent.click(screen.getByRole('button',{name:'Save roles and permissions'}));await waitFor(()=>expect(api).toHaveBeenCalledWith('people/2','PATCH',expect.objectContaining({action:'access',overrides:[{permission:'applications.view',allowed:false}]})));});

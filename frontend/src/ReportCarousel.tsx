@@ -1,0 +1,13 @@
+import {useLayoutEffect,useRef,useState,type ReactNode} from 'react';
+export default function ReportCarousel({children}:{children:[ReactNode,ReactNode]}){
+ const [slide,setSlide]=useState(0),[height,setHeight]=useState<number>(),panels=useRef<(HTMLDivElement|null)[]>([]),start=useRef<{x:number;y:number}|null>(null);
+ useLayoutEffect(()=>{const panel=panels.current[slide];if(!panel)return;const measure=()=>setHeight(panel.getBoundingClientRect().height);measure();if(typeof ResizeObserver==='undefined')return;const observer=new ResizeObserver(measure);observer.observe(panel);return()=>observer.disconnect()},[slide]);
+ const titles=['Outcomes','Locations'];
+ function move(index:number){setSlide(Math.max(0,Math.min(1,index)))}
+ return <section className="report-carousel" role="region" aria-roledescription="carousel" aria-label="Programme report views" tabIndex={0} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==='ArrowRight'){e.preventDefault();move(slide+1)}if(e.key==='ArrowLeft'){e.preventDefault();move(slide-1)}}}>
+  <div className="report-carousel-bar"><div className="report-slide-tabs" aria-label="Report view">{titles.map((title,index)=><button key={title} aria-pressed={slide===index} onClick={()=>move(index)}>{title}</button>)}</div><div className="report-slide-controls"><span aria-live="polite">{slide+1} / 2</span><button aria-label="Previous report view" disabled={slide===0} onClick={()=>move(slide-1)}>←</button><button aria-label="Next report view" disabled={slide===1} onClick={()=>move(slide+1)}>→</button></div></div>
+  <div className="report-carousel-window" style={{height}} onTouchStart={e=>{if((e.target as Element).closest('[data-swipe-lock="true"]')){start.current=null;return}start.current={x:e.touches[0].clientX,y:e.touches[0].clientY}}} onTouchEnd={e=>{if(!start.current)return;const dx=e.changedTouches[0].clientX-start.current.x,dy=e.changedTouches[0].clientY-start.current.y;start.current=null;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)move(slide+(dx<0?1:-1))}}>
+   <div className="report-carousel-track" style={{transform:`translateX(-${slide*100}%)`}}>{children.map((child,index)=><div key={index} ref={el=>{panels.current[index]=el}} className="report-carousel-slide" role="group" aria-roledescription="slide" aria-label={`${index+1} of 2: ${titles[index]}`} aria-hidden={slide!==index} inert={slide!==index}>{child}</div>)}</div>
+  </div><div className="report-carousel-footer"><span>Swipe or use the arrows to explore</span><div>{titles.map((title,index)=><button key={title} className={slide===index?'active':''} aria-label={`Show ${title.toLowerCase()} report`} aria-pressed={slide===index} onClick={()=>move(index)}/>)}</div></div>
+ </section>;
+}

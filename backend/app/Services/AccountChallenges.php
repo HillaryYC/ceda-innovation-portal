@@ -1,0 +1,12 @@
+<?php
+namespace App\Services;
+use App\Models\User;use Illuminate\Support\Facades\{DB,Hash};use Illuminate\Support\Str;
+class AccountChallenges {
+ public function issue(User $user,string $purpose,string $channel):string{
+  abort_if($channel==='sms'&&!config('portal.sms_enabled'),503,'SMS delivery is temporarily unavailable.');
+  abort_if($channel==='sms'&&!config('portal.sms_demo')&&(!config('portal.sms_sid')||!config('portal.sms_token')||!config('portal.sms_from')),503,'SMS delivery is not configured.');
+  abort_if($channel==='email'&&in_array(config('mail.default'),['log','array'])&&!app()->environment('testing'),503,'Email delivery is not configured. Contact support.');
+  return DB::transaction(function()use($user,$purpose,$channel){User::whereKey($user->id)->lockForUpdate()->first();$last=DB::table('account_challenges')->where('user_id',$user->id)->where('purpose',$purpose)->latest('created_at')->first();abort_if($last&&now()->diffInSeconds($last->created_at,true)<60,429,'Wait one minute before requesting another code.');DB::table('account_challenges')->where('user_id',$user->id)->where('purpose',$purpose)->whereNull('used_at')->update(['used_at'=>now()]);$id=(string)Str::uuid();$code=(string)random_int(100000,999999);DB::table('account_challenges')->insert(['id'=>$id,'user_id'=>$user->id,'purpose'=>$purpose,'channel'=>$channel,'code_hash'=>Hash::make($code),'expires_at'=>now()->addMinutes(10),'created_at'=>now(),'updated_at'=>now()]);if($channel==='sms'&&config('portal.sms_demo'))session()->put('applicant_demo_code.'.$id,$code);else \App\Jobs\DeliverAccountCode::dispatch($id,$channel==='email'?$user->email:$user->phone,$channel,$code)->afterCommit();return $id;});
+ }
+ public function redeem(string $id,string $purpose,string $code,\Closure $complete):bool{return DB::transaction(function()use($id,$purpose,$code,$complete){$c=DB::table('account_challenges')->where('id',$id)->lockForUpdate()->first();if(!$c||$c->purpose!==$purpose||$c->used_at||now()->gte($c->expires_at)||$c->attempts>=5)return false;DB::table('account_challenges')->where('id',$id)->increment('attempts');if(!Hash::check($code,$c->code_hash))return false;$u=User::lockForUpdate()->findOrFail($c->user_id);if(!Administration::active($u))return false;$complete($u,$c);DB::table('account_challenges')->where('user_id',$u->id)->where('purpose',$purpose)->whereNull('used_at')->update(['used_at'=>now()]);return true;});}
+}

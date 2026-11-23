@@ -1,0 +1,11 @@
+import {useEffect,useRef,useState} from 'react';
+import {api} from './operationalApi';
+type Pending={purpose?:'password_reset';resolve:()=>void;reject:(error:Error)=>void};
+export default function StepUpVerification(){
+ const [pending,setPending]=useState<Pending[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false);
+ const dialog=useRef<HTMLDialogElement>(null),waiting=useRef<Pending[]>([]);
+ useEffect(()=>{const listener=(event:Event)=>{const request=(event as CustomEvent<Pending>).detail;waiting.current=[...waiting.current,request];setPending(waiting.current);setError('')};window.addEventListener('ceda-step-up',listener);return()=>{window.removeEventListener('ceda-step-up',listener);waiting.current.forEach(p=>p.reject(new Error('Verification interrupted. Your change was not submitted.')))}},[]);
+ useEffect(()=>{if(pending.length&&!dialog.current?.open)dialog.current?.showModal()},[pending.length]);
+ function cancel(){waiting.current.forEach(p=>p.reject(new Error('Verification cancelled. Your form is still available.')));waiting.current=[];setPending([]);dialog.current?.close()}
+ return <dialog ref={dialog} className="step-up-dialog" aria-labelledby="step-up-title" onCancel={e=>{e.preventDefault();if(!busy)cancel()}}><h2 id="step-up-title">Confirm it’s you</h2><p>Enter a fresh Google Authenticator code to continue. Your changes will be saved after verification.</p><form onSubmit={async e=>{e.preventDefault();const code=new FormData(e.currentTarget).get('code');setBusy(true);setError('');try{await api('mfa/verify','POST',{code,purpose:waiting.current.find(p=>p.purpose)?.purpose});const requests=waiting.current;waiting.current=[];setPending([]);dialog.current?.close();requests.forEach(p=>p.resolve())}catch(err){setError((err as Error).message)}finally{setBusy(false)}}}><label>Authenticator code<input name="code" required pattern="[0-9]{6}" inputMode="numeric" maxLength={6} autoComplete="one-time-code" autoFocus/></label>{error&&<p role="alert">{error}</p>}<div className="actions"><button type="button" className="btn" disabled={busy} onClick={cancel}>Cancel</button><button className="btn primary" disabled={busy}>{busy?'Verifying…':'Verify and continue'}</button></div></form></dialog>;
+}

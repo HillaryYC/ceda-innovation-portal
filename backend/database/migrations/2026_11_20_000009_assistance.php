@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
+return new class extends Migration{public function up():void{Schema::create('programme_guidance',function(Blueprint $t){$t->id();$t->foreignId('programme_id')->constrained();$t->string('question',300);$t->text('answer');$t->boolean('published')->default(false);$t->timestamps();});Schema::create('proposal_summaries',function(Blueprint $t){$t->id();$t->foreignId('idea_id')->constrained();$t->string('fingerprint',64);$t->text('summary');$t->timestamps();$t->unique(['idea_id','fingerprint']);});}public function down():void{Schema::dropIfExists('proposal_summaries');Schema::dropIfExists('programme_guidance');}};

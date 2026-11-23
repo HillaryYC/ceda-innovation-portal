@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
+return new class extends Migration{public function up():void{Schema::create('account_challenges',function(Blueprint $t){$t->uuid('id')->primary();$t->foreignId('user_id')->constrained();$t->string('purpose');$t->string('channel');$t->string('code_hash');$t->unsignedTinyInteger('attempts')->default(0);$t->timestamp('expires_at');$t->timestamp('used_at')->nullable();$t->timestamps();$t->index(['user_id','purpose']);});}public function down():void{Schema::dropIfExists('account_challenges');}};

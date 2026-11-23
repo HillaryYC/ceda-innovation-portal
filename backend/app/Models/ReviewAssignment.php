@@ -1,0 +1,7 @@
+<?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class ReviewAssignment extends Model {
+ protected $guarded=['id'];
+}
